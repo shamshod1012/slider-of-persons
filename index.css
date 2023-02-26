@@ -177,6 +177,7 @@ main {
   max-width: var(--fixed-width);
 }
 .review {
+  position: relative;
   background: var(--clr-white);
   padding: 1.5rem 2rem;
   border-radius: var(--radius);
@@ -269,4 +270,13 @@ main {
 .random-btn:hover {
   background: var(--clr-primary-5);
   color: var(--clr-primary-1);
+}
+#btn-search {
+  position: absolute;
+  right: 5%;
+  background-color: var(--clr-white);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: large;
+  cursor: pointer;
 }
