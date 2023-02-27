@@ -1,4 +1,3 @@
-let container = document.querySelector(".wrapper");
 let btn = document.querySelector(".btn");
 let input = document.querySelector(".input");
 let error = document.querySelector(".error");
@@ -22,22 +21,35 @@ async function getUser(url) {
   let UserUrl = `https://api.github.com/users/${url}`;
   let user = await fetch(UserUrl);
   let result = await user.json();
-  console.log(UserUrl, result);
-  userContainer.innerHTML = "";
-  userContainer.innerHTML += `      
-          
-          <div class="user">
-                <div class="img_container">
-                  <img
-                    src="${result.avatar_url}"
-                    alt=""
-                    width="80px"
-                  />
+  if (!result.message) {
+    console.log(UserUrl, result);
+    userContainer.innerHTML = "";
+    userContainer.innerHTML += `      
+            
+            <div class="user">
+                  <div class="img_container">
+                    <img
+                      src="${result.avatar_url}"
+                      alt=""
+                      width="80px"
+                    />
+                  </div>
+                  <div class="info_container">
+                    <p class="username">${result.login}</p>
+                    <a href="${result.html_url}"> <button class="visit">Visit</button></a>
+                  </div>
                 </div>
-                <div class="info_container">
-                  <p class="username">${result.login}</p>
-                  <a href="${result.html_url}"> <button class="visit">Visit</button></a>
-                </div>
-              </div>
-              `;
+                `;
+    localStorage.clear();
+    localStorage.setItem("user", userContainer.innerHTML);
+  } else {
+    userContainer.innerText = `'${url}' Not found`;
+    localStorage.clear();
+    localStorage.setItem("user", userContainer.innerHTML);
+  }
 }
+document.addEventListener("DOMContentLoaded", () => {
+  userContainer.innerHTML = localStorage.getItem("user")
+    ? localStorage.getItem("user")
+    : "";
+});
